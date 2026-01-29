@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# User Management System – Frontend
 
-## Getting Started
+A **Next.js + TypeScript frontend** for the User Management System. Built with **React**, **Tailwind CSS**, and **Axios** for API communication with the backend.
 
-First, run the development server:
+---
+
+## 🚀 Tech Stack
+
+* **Next.js 16**
+* **React 19**
+* **TypeScript**
+* **Tailwind CSS 4**
+* **Axios** (API calls)
+* **React Toastify** (Notifications)
+* **Lucide React** (Icons)
+* **Radix UI Slot** (Component composition)
+
+
+```
+
+---
+
+## ⚙️ Environment Variables
+
+Create a `.env` file in the root:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
+```
+
+> ⚠️ **Important:** Use `NEXT_PUBLIC_` prefix for variables that need to be exposed to the frontend.
+
+---
+
+## 📦 Installation
+
+```bash
+npm install
+```
+
+---
+
+## 🏃 Running the Project
+
+### Development Mode
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will run at [http://localhost:3001](http://localhost:3001) by default (or your chosen port).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Production Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔗 API Integration
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* All API calls use **Axios** to connect to the backend at `NEXT_PUBLIC_API_URL`.
+* Example of calling backend endpoints:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```ts
+import axios from 'axios';
 
-## Deploy on Vercel
+const api = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+});
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+export const loginUser = (data: { email: string; password: string }) => {
+  return api.post('/auth/login', data);
+};
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🧩 Features
+
+* User authentication with **JWT** (token stored in memory / localStorage)
+* Role-based routing (Admin / User)
+* Toast notifications for success/error messages
+* Responsive UI with Tailwind CSS
+* Modular component structure for scalability
+
+---
+
+## 🛠 Scripts
+
+```json
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "lint": "eslint"
+}
