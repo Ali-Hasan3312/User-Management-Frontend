@@ -48,7 +48,7 @@ export default function LoginPage() {
       } else {
         router.push('/');
       }
-    } catch (err) {
+    } catch (err : any) {
       setError('An error occurred. Please try again.');
       toast.error(err.message);
       console.error(err);
