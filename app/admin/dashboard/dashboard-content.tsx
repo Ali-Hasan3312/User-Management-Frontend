@@ -74,9 +74,12 @@ export function AdminDashboardContent() {
 
       toast.success(response.data.message);
       await fetchUsers();
-    } catch (err: any) {
-      toast.error(err?.message || 'Something went wrong');
-      console.error(err);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+    toast.error(err.message);
+  } else {
+    toast.error("Something went wrong");
+  }
     } finally {
       setActionLoading(null);
     }
@@ -166,7 +169,7 @@ export function AdminDashboardContent() {
 
           <select
             value={roleFilter}
-            onChange={(e) => setRoleFilter(e.target.value as any)}
+            onChange={(e) => setRoleFilter(e.target.value as 'ALL' | 'ADMIN' | 'USER')}
             className="border cursor-pointer rounded-md px-3 py-2 w-full md:w-1/5"
           >
             <option value="ALL">All Roles</option>
@@ -176,7 +179,7 @@ export function AdminDashboardContent() {
 
           <select
             value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value as any)}
+            onChange={(e) => setStatusFilter(e.target.value as 'ALL' | 'ACTIVE' | 'BLOCKED')}
             className="border cursor-pointer rounded-md px-3 py-2 w-full md:w-1/5"
           >
             <option value="ALL">All Status</option>

@@ -48,10 +48,12 @@ export default function LoginPage() {
       } else {
         router.push('/');
       }
-    } catch (err : any) {
-      setError('An error occurred. Please try again.');
-      toast.error(err.message);
-      console.error(err);
+    } catch (err : unknown) {
+      if (err instanceof Error) {
+    toast.error(err.message);
+  } else {
+    toast.error("Something went wrong");
+  }
     } finally {
       setLoading(false);
     }

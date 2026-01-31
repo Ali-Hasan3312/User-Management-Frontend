@@ -12,22 +12,14 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from "react-toastify";
 
-interface UserProfile {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-}
 
 export function UserProfileEditContent() {
   const router = useRouter();
-  const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -37,7 +29,6 @@ export function UserProfileEditContent() {
     api.get('/user/me')
       .then((res) => res.data)
       .then((data) => {
-        setUser(data.user);
         setName(data.user.name);
         setEmail(data.user.email);
         setLoading(false);
@@ -76,14 +67,16 @@ export function UserProfileEditContent() {
       }
 
       toast.success('Profile updated successfully!');
-      setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
 
       
     } catch (err) {
-      toast.error(err.message);
-      console.error(err);
+      if (err instanceof Error) {
+    toast.error(err.message);
+  } else {
+    toast.error("Something went wrong");
+  }
     } finally {
       setSaving(false);
     }

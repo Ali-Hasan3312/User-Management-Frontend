@@ -37,7 +37,10 @@ export function UserGaurd({
           return;
         }
 
-        if ( data.user.role !== "USER") {
+        if(data.user.role === "USER"){
+          router.push('/');
+          return;
+        } else if ( data.user.role === "ADMIN") {
           router.push('/admin/dashboard');
           return;
         }

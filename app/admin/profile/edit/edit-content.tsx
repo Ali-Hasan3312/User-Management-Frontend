@@ -70,8 +70,12 @@ export function AdminProfileEditContent() {
       setNewPassword("");
       setConfirmPassword("");
 
-    } catch (err: any) {
-      toast.error(err?.response?.data?.message || "Failed to update profile");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+    toast.error(err.message);
+  } else {
+    toast.error("Something went wrong");
+  }
     } finally {
       setSaving(false);
     }
